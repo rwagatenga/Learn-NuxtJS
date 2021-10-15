@@ -3,7 +3,9 @@
 		<section class="intro">
 		<h2>Get the latest tech news !</h2>
 		</section>
-		<PostList />
+		<div v-if="loadedPosts">
+			<PostList :posts="loadedPosts"/>
+		</div>
 	</div>
 </template>
 
@@ -13,10 +15,16 @@
 		components: {
 			PostList
 		},
+		computed: {
+			loadedPosts() {
+				return this.$store.getters.loadedPosts
+			}
+		},
 		
 	}
 	
 </script>
+
 <style scoped> 
 	.intro { 
 		height: 300px; 

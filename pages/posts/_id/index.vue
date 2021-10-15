@@ -2,15 +2,15 @@
 
     <div class="single-post-page">
         <section class="post">
-            <h1>Title of the Post</h1>
+            <h1>{{ loadedPosts.title}}</h1>
             <div class="post-details">
                 <div class="post-detail">
-                    Last updated on XXX
+                    Last updated on {{ loadedPosts.updatedDate}}
                 </div>
                 <div class="post-detail">
-                    Written by NAME
+                    Written by {{ loadedPosts.author}}
                 </div>
-                <p>Content of the Post</p>
+                <p>{{ loadedPosts.content}}</p>
             </div>
         </section>
         <section class="post-feedback">
@@ -21,6 +21,45 @@
         </section>
     </div>
 </template>
+
+<script>
+	import PostList from '@/components/Posts/PostList';
+	export default {
+		components: {
+			PostList
+		},
+		
+		asyncData(contex, callback) {
+			return new Promise((resolve, reject) => {
+				setTimeout(() => {
+					callback(null, {
+						loadedPosts: {
+								id: "1",
+								thumbnail: "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg",
+								title: "Hello There - First time!",
+								previewText: "This my First post !",
+								author: 'Rwagatenga',
+								content: 'Some dummy data for nothing',
+								updatedDate: new Date().getDate()
+							},
+
+					})
+				}, 1500);
+			})
+			.catch(e => {
+				context.error(new Error())
+			})
+		},
+		// data() {
+		// 	return {
+				
+		// 	}
+		// },
+		created() {}
+		
+	}
+	
+</script>
 
 <style scoped> 
     .single-post-page { 
