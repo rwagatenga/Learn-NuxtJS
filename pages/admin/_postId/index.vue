@@ -1,45 +1,53 @@
 <template>
-    <div class="admin-new-post-page">
-        <section class="new-post-form">
-            <AdminPostForm :post="loadedPost"/>
-        </section>
-    </div>
+	<div class="admin-post-page">
+		<section class="update-form">
+			<AdminPostForm :post="loadedPost" @submit="onSubmitted" />
+		</section>
+	</div>
 </template>
 
 <script>
 import AdminPostForm from '@/components/Admin/AdminPostForm'
+import axios from "axios";
 
 export default {
-    layout: 'admin',
+	layout: "admin",
 	components: {
 		AdminPostForm
 	},
-    data() {
-        return {
-            loadedPost: {
-                author: 'Maximilian',
-                title: 'My Awesome Post',
-                content: 'Super Amazing, Thanks for That',
-                thumbnailLink: "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-            }
-        }
-    },
-	
-}
+	asyncData(context) {
+		return axios
+			.get(
+				"https://vue-https-d0d71-default-rtdb.firebaseio.com/posts/" +
+					context.params.postId +
+					".json"
+			)
+			.then(res => {
+				return {
+					loadedPost: { ...res.data, id: context.params.postId }
+				};
+			})
+			.catch(e => context.error());
+	},
+	 methods: {
+		onSubmitted(editedPost) {
+		this.$store.dispatch("editPost", editedPost).then(() => {
+			this.$router.push("/admin");
+		});
+		}
+	}
+};
 </script>
 
 <style scoped>
-    .admin-new-post-page {
-        align-content: center;
-        align-items: center;
-    }
-	.admin-post-form {
-		width: 90%;
-		margin: 20px auto;
+.update-form {
+	width: 90%;
+	margin: 20px auto;
+}
+
+@media (min-width: 768px) {
+	.update-form {
+		width: 500px;
 	}
-	@media (min-width: 768px) {
-		.new-post-form {
-			width: 500px;
-		}
-	}
+}
 </style>
