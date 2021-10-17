@@ -18,7 +18,7 @@ export default {
 	asyncData(context) {
 		return axios
 			.get(
-				"https://vue-https-d0d71-default-rtdb.firebaseio.com/posts/" +
+				process.env.baseUrl + "/posts/" +
 					context.params.postId +
 					".json"
 			)

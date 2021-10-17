@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import PostList from '@/components/Posts/PostList'
-import AppButton from '@/components/UI/AppButton'
 
 export default {
 	layout: 'admin',
@@ -20,10 +18,6 @@ export default {
 		loadedPosts() {
 			return this.$store.getters.loadedPosts
 		}
-	},
-	components: {
-		PostList,
-		AppButton
 	}
 }
 </script>

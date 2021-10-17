@@ -23,7 +23,7 @@ const createStore = () => {
     actions: {
 		nuxtServerInit(vuexContext, context) {
 			return axios
-        .get("https://vue-https-d0d71-default-rtdb.firebaseio.com/posts.json")
+        .get(process.env.baseUrl + "/posts.json")
         .then(res => {
           const postsArray = [];
           for (const key in res.data) {
